@@ -32,7 +32,7 @@ public:
 
     uint16_t pushBack(const T &value);
 
-    int32_t indexOf(const T &value);
+    int32_t indexOf(const T &value) const;
 
     void set(uint16_t pos, const T &value);
 
@@ -42,9 +42,9 @@ public:
 
     void removeLasts(uint16_t nbToRemove);
 
-    T last();
+    T last() const;
 
-    T first();
+    T first() const;
 
 };
 

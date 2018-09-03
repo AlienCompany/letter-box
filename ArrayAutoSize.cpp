@@ -46,7 +46,7 @@ uint16_t ArrayAutoSize<T>::pushBack(const T &value) {
 }
 
 template<typename T>
-int32_t ArrayAutoSize<T>::indexOf(const T &value) {
+int32_t ArrayAutoSize<T>::indexOf(const T &value) const{
     for (uint16_t i = 0; i < length; i++) {
         if (array[i] == value) return i;
     }
@@ -59,9 +59,8 @@ void ArrayAutoSize<T>::set(uint16_t pos, const T &value) {
         if (pos >= size) {
             resize(pos + 1);
         }
-    } else {
-
     }
+    array[pos] = value;
 }
 
 template<typename T>
@@ -81,11 +80,11 @@ void ArrayAutoSize<T>::removeLasts(uint16_t nbToRemove) {
 }
 
 template<typename T>
-T ArrayAutoSize<T>::last() {
+T ArrayAutoSize<T>::last() const {
     return get(length - 1);
 }
 
 template<typename T>
-T ArrayAutoSize<T>::first() {
+T ArrayAutoSize<T>::first() const {
     return get(0);
 }
