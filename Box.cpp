@@ -5,7 +5,7 @@
 #include "Box.h"
 #include <Arduino.h>
 
-Box::Box(Sensor *slotSensor, Sensor *doorSensor) : slotSensor(slotSensor), doorSensor(doorSensor) {}
+Box::Box(Sensor *slotSensor, Sensor *doorSensor, Led *letterLed) : slotSensor(slotSensor), doorSensor(doorSensor), letterLed(letterLed) {}
 
 Box::~Box() {}
 
@@ -23,6 +23,32 @@ void Box::loop() {
 void Box::onReceiveLetter() {
 
     Serial.println("onReceiveLetter");
+    letterLed->setBrightness(255);
 
+
+}
+
+Sensor *Box::getSlotSensor() const {
+    return slotSensor;
+}
+
+void Box::setSlotSensor(Sensor *slotSensor) {
+    Box::slotSensor = slotSensor;
+}
+
+Sensor *Box::getDoorSensor() const {
+    return doorSensor;
+}
+
+void Box::setDoorSensor(Sensor *doorSensor) {
+    Box::doorSensor = doorSensor;
+}
+
+Led *Box::getLetterLed() const {
+    return letterLed;
+}
+
+void Box::setLetterLed(Led *letterLed) {
+    Box::letterLed = letterLed;
 }
 
