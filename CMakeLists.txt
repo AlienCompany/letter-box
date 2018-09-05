@@ -7,12 +7,14 @@ set(COMMON_CPPS
         ArrayAutoSize.cpp
         Sensor.cpp
         Box.cpp
+        Led.cpp
         )
 set(COMMON_HS
         ArrayAutoSize.h
         Util.h
         Sensor.h
         Box.h
+        Led.h
         )
 
 set(PORT COM4)
