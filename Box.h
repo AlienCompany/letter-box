@@ -18,11 +18,14 @@ private:
     Sensor *collectButton;
 
 public:
-    Box(Sensor *slotSensor, Sensor *doorSensor, Led *letterLed);
+    Box(Sensor *slotSensor, Sensor *doorSensor, Led *letterLed, Sensor *collectButton);
+
 
     void loop();
 
     void onReceiveLetter();
+
+    void onCollect();
 
     Sensor *getSlotSensor() const;
 

@@ -5,7 +5,8 @@
 #include "Box.h"
 #include <Arduino.h>
 
-Box::Box(Sensor *slotSensor, Sensor *doorSensor, Led *letterLed) : slotSensor(slotSensor), doorSensor(doorSensor), letterLed(letterLed) {}
+Box::Box(Sensor *slotSensor, Sensor *doorSensor, Led *letterLed, Sensor *collectButton)
+        : slotSensor(slotSensor), doorSensor(doorSensor), letterLed(letterLed), collectButton(collectButton) {}
 
 Box::~Box() {}
 
@@ -13,11 +14,14 @@ void Box::loop() {
 
     SensorEventCode slotCode = slotSensor->checkChange();
     SensorEventCode doorCode = doorSensor->checkChange();
+    SensorEventCode collectCode = collectButton->checkChange();
 
-    if (slotCode == OPEN){
+    if (slotCode == OPEN) {
         onReceiveLetter();
     }
-
+    if (collectCode == OPEN) {
+        onCollect();
+    }
 }
 
 void Box::onReceiveLetter() {
@@ -25,6 +29,13 @@ void Box::onReceiveLetter() {
     Serial.println("onReceiveLetter");
     letterLed->setBrightness(255);
 
+
+}
+
+void Box::onCollect() {
+
+    Serial.println("onCollect");
+    letterLed->setBrightness(0);
 
 }
 
