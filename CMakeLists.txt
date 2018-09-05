@@ -2,34 +2,15 @@ cmake_minimum_required(VERSION 2.8.4)
 set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/cmake/ArduinoToolchain.cmake)
 
 set(COMMON_CPPS
-#        Com.cpp
-#        PhysicalLeg.cpp
-#        Legs.cpp
-#        Leg.cpp
-#        LegController.cpp
-#        LegState.cpp
-#        RemoteLeg.cpp
-#        Motor.cpp
-#        Max7219.cpp
-#        HcSr04.cpp
         Util.cpp
         FixBug.c
         ArrayAutoSize.cpp
+        Sensor.cpp
         )
 set(COMMON_HS
-#        Com.h
-#        PhysicalLeg.h
-#        Legs.h
-#        LegController.h
-#        LegState.h
-#        Side.h
-#        Leg.h
-#        RemoteLeg.h
-#        Motor.h
-#        Max7219.h
-#        HcSr04.h
         ArrayAutoSize.h
         Util.h
+        Sensor.h
         )
 
 set(PROJECT_BOARD pro)
