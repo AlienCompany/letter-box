@@ -9,7 +9,7 @@ const uint8_t PIN_SLOT_SENSOR = 2;
 const uint8_t PIN_DOOR_SENSOR = 4;
 const uint8_t PIN_LETTER_LED = 3;
 const uint8_t PIN_COLLECT = 7;
-const uint8_t PIN_PACKET_LED = 8;
+const uint8_t PIN_PACKET_LED = 6;
 
 void setup() {
     Serial.begin(9600);
