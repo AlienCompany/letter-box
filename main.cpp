@@ -22,10 +22,10 @@ void setup() {
     Sensor *collectSensor = new Sensor(PIN_COLLECT);
     Led *packetLed = new Led(PIN_PACKET_LED, 0);
 
-    Sensor *callingCardSensor = new Sensor(PIN_COLLECT);
-    Led *callingCardLed = new Led(PIN_PACKET_LED, 0);
+    Sensor *callingCardSensor = new Sensor(PIN_CALLING_CARD);
+    Led *callingCardLed = new Led(PIN_CALLING_CARD_LED, 0);
 
-    box = new Box(slotSensor, doorSensor, letterLed, collectSensor, packetLed, NULL, NULL);
+    box = new Box(slotSensor, doorSensor, letterLed, collectSensor, packetLed, callingCardSensor, callingCardLed);
 
     pinMode(PIN_SLOT_SENSOR, INPUT);
     pinMode(PIN_DOOR_SENSOR, INPUT);
