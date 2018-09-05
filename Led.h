@@ -11,15 +11,16 @@
 class Led {
 private:
 
-    uint8_t PIN_LETTER_LED;
+    uint8_t PIN_LED;
+
 
     int brightness; // 0 to 255
 
 public:
 
-    Led(uint8_t PIN_LETTER_LED);
+    Led(uint8_t PIN_LED);
 
-    Led(uint8_t PIN_LETTER_LED, int brightness);
+    Led(uint8_t PIN_LED, int brightness);
 
     void init();
 

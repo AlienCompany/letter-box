@@ -5,8 +5,9 @@
 #include "Box.h"
 #include <Arduino.h>
 
-Box::Box(Sensor *slotSensor, Sensor *doorSensor, Led *letterLed, Sensor *collectButton)
-        : slotSensor(slotSensor), doorSensor(doorSensor), letterLed(letterLed), collectButton(collectButton) {}
+Box::Box(Sensor *slotSensor, Sensor *doorSensor, Led *letterLed, Sensor *collectButton, Led *packetLed)
+        : slotSensor(slotSensor), doorSensor(doorSensor), letterLed(letterLed), collectButton(collectButton),
+          packetLed(packetLed) {}
 
 Box::~Box() {}
 
@@ -18,6 +19,9 @@ void Box::loop() {
 
     if (slotCode == OPEN) {
         onReceiveLetter();
+    }
+    if (doorCode == OPEN) {
+        onReceivePacket();
     }
     if (collectCode == OPEN) {
         onCollect();
@@ -32,10 +36,18 @@ void Box::onReceiveLetter() {
 
 }
 
+void Box::onReceivePacket(){
+
+    Serial.println("onReceivePacket");
+    packetLed->setBrightness(255);
+
+}
+
 void Box::onCollect() {
 
     Serial.println("onCollect");
     letterLed->setBrightness(0);
+    packetLed->setBrightness(0);
 
 }
 
@@ -61,5 +73,13 @@ Led *Box::getLetterLed() const {
 
 void Box::setLetterLed(Led *letterLed) {
     Box::letterLed = letterLed;
+}
+
+Led *Box::getPacketLed() const {
+    return packetLed;
+}
+
+void Box::setPacketLed(Led *packetLed) {
+    Box::packetLed = packetLed;
 }
 
