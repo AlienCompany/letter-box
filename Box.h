@@ -15,6 +15,7 @@ private:
     Sensor *slotSensor;
     Sensor *doorSensor;
     Led *letterLed;
+    Sensor *collectButton;
 
 public:
     Box(Sensor *slotSensor, Sensor *doorSensor, Led *letterLed);
