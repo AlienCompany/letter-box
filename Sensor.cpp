@@ -12,9 +12,13 @@ Sensor::Sensor(uint8_t PIN_SENSOR, long sensibility) : PIN_SENSOR(PIN_SENSOR), s
 Sensor::~Sensor() {}
 
 SensorEventCode Sensor::checkChange() {
+    if(lastEventDate + sensibility >= millis()){
+        return NONE;
+    }
+
     SensorState valueSensor = (SensorState) digitalRead(PIN_SENSOR);
 
-    if (valueSensor != currentState && lastEventDate + sensibility >= millis()) {
+    if (valueSensor != currentState ) {
         currentState = valueSensor;
         lastEventDate = millis();
         if (currentState == OPENED) {
