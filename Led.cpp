@@ -4,14 +4,13 @@
 
 #include "Led.h"
 
-Led::Led(uint8_t PIN_LETTER_LED) : PIN_LETTER_LED(PIN_LETTER_LED) {}
+Led::Led(uint8_t PIN_LED) : PIN_LED(PIN_LED) {}
 
-Led::Led(uint8_t PIN_LETTER_LED, int brightness) : PIN_LETTER_LED(PIN_LETTER_LED), brightness(brightness) {}
+Led::Led(uint8_t PIN_LED, int brightness) : PIN_LED(PIN_LED), brightness(brightness) {}
 
 void Led::init() {
 
-    analogWrite(PIN_LETTER_LED, brightness);
-
+    analogWrite(PIN_LED, brightness);
 }
 
 int Led::getBrightness() const {
@@ -20,7 +19,7 @@ int Led::getBrightness() const {
 
 void Led::setBrightness(int brightness) {
     Led::brightness = brightness;
-    analogWrite(PIN_LETTER_LED, brightness);
+    analogWrite(PIN_LED, brightness);
 }
 
 Led::~Led() {}

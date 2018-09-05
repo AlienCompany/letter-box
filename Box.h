@@ -16,14 +16,17 @@ private:
     Sensor *doorSensor;
     Led *letterLed;
     Sensor *collectButton;
+    Led *packetLed;
 
 public:
-    Box(Sensor *slotSensor, Sensor *doorSensor, Led *letterLed, Sensor *collectButton);
+    Box(Sensor *slotSensor, Sensor *doorSensor, Led *letterLed, Sensor *collectButton, Led *packetLed);
 
 
     void loop();
 
     void onReceiveLetter();
+
+    void onReceivePacket();
 
     void onCollect();
 
@@ -38,6 +41,10 @@ public:
     Led *getLetterLed() const;
 
     void setLetterLed(Led *letterLed);
+
+    Led *getPacketLed() const;
+
+    void setPacketLed(Led *packetLed);
 
     virtual ~Box();
 };
