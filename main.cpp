@@ -5,10 +5,10 @@
 
 Box *box;
 
-const PIN_SLOT_SENSOR = 2;
-const PIN_DOOR_SENSOR = 4;
-const PIN_LETTER_LED = 3;
-const PIN_COLLECT = 7;
+const uint8_t PIN_SLOT_SENSOR = 2;
+const uint8_t PIN_DOOR_SENSOR = 4;
+const uint8_t PIN_LETTER_LED = 3;
+const uint8_t PIN_COLLECT = 7;
 
 void setup() {
     Serial.begin(9600);
