@@ -4,18 +4,22 @@
 
 #include "Sensor.h"
 #include <Arduino.h>
+
 Sensor::Sensor(uint8_t PIN_SENSOR) : PIN_SENSOR(PIN_SENSOR) {}
+
+Sensor::Sensor(uint8_t PIN_SENSOR, long sensibility) : PIN_SENSOR(PIN_SENSOR), sensibility(sensibility) {}
 
 Sensor::~Sensor() {}
 
 SensorEventCode Sensor::checkChange() {
     SensorState valueSensor = (SensorState) digitalRead(PIN_SENSOR);
 
-    if (valueSensor != currentState){
+    if (valueSensor != currentState && lastEventDate + sensibility >= millis()) {
         currentState = valueSensor;
-        if(currentState == OPENED){
+        lastEventDate = millis();
+        if (currentState == OPENED) {
             return OPEN;
-        }else{
+        } else {
             return CLOSE;
         }
     }
@@ -26,3 +30,13 @@ SensorEventCode Sensor::checkChange() {
 SensorState Sensor::getState() {
     return currentState;
 }
+
+long Sensor::getSensibility() const {
+    return sensibility;
+}
+
+void Sensor::setSensibility(long sensibility) {
+    Sensor::sensibility = sensibility;
+}
+
+

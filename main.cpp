@@ -7,8 +7,8 @@ Box *box;
 
 void setup() {
     Serial.begin(9600);
-    Sensor *slotSensor = new Sensor(2);
-    Sensor *doorSensor = new Sensor(4);
+    Sensor *slotSensor = new Sensor(2,200);
+    Sensor *doorSensor = new Sensor(4,200);
 
     box = new Box(slotSensor, doorSensor);
 
