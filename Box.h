@@ -17,9 +17,12 @@ private:
     Led *letterLed;
     Sensor *collectButton;
     Led *packetLed;
+    Sensor *callingCardSensor;
+    Led *callingCardLed;
 
 public:
-    Box(Sensor *slotSensor, Sensor *doorSensor, Led *letterLed, Sensor *collectButton, Led *packetLed);
+    Box(Sensor *slotSensor, Sensor *doorSensor, Led *letterLed, Sensor *collectButton, Led *packetLed,
+            Sensor *callingCardSensor, Led *callingCardLed);
 
 
     void loop();
@@ -46,7 +49,21 @@ public:
 
     void setPacketLed(Led *packetLed);
 
+    Sensor *getCollectButton() const;
+
+    void setCollectButton(Sensor *collectButton);
+
+    Sensor *getCallingCardSensor() const;
+
+    void setCallingCardSensor(Sensor *callingCardSensor);
+
+    Led *getCallingCardLed() const;
+
+    void setCallingCardLed(Led *callingCardLed);
+
     virtual ~Box();
+
+    void onCallingCard();
 };
 
 
