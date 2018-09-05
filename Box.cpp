@@ -5,9 +5,10 @@
 #include "Box.h"
 #include <Arduino.h>
 
-Box::Box(Sensor *slotSensor, Sensor *doorSensor, Led *letterLed, Sensor *collectButton, Led *packetLed)
+Box::Box(Sensor *slotSensor, Sensor *doorSensor, Led *letterLed, Sensor *collectButton, Led *packetLed,
+         Sensor *callingCardSensor, Led *callingCardLed)
         : slotSensor(slotSensor), doorSensor(doorSensor), letterLed(letterLed), collectButton(collectButton),
-          packetLed(packetLed) {}
+          packetLed(packetLed), callingCardSensor(callingCardSensor), callingCardLed(callingCardLed) {}
 
 Box::~Box() {}
 
@@ -16,6 +17,7 @@ void Box::loop() {
     SensorEventCode slotCode = slotSensor->checkChange();
     SensorEventCode doorCode = doorSensor->checkChange();
     SensorEventCode collectCode = collectButton->checkChange();
+    SensorEventCode callingCardEventCode = callingCardSensor->checkChange();
 
     if (slotCode == OPEN) {
         onReceiveLetter();
@@ -26,6 +28,10 @@ void Box::loop() {
     if (collectCode == OPEN) {
         onCollect();
     }
+    if(callingCardEventCode == OPEN) {
+        onCallingCard();
+    }
+
 }
 
 void Box::onReceiveLetter() {
@@ -48,7 +54,14 @@ void Box::onCollect() {
     Serial.println("onCollect");
     letterLed->setBrightness(0);
     packetLed->setBrightness(0);
+    callingCardLed->setBrightness(0);
 
+}
+
+void Box::onCallingCard() {
+
+    Serial.println("onCallingCard");
+    callingCardLed->setBrightness(255);
 }
 
 Sensor *Box::getSlotSensor() const {
@@ -81,5 +94,29 @@ Led *Box::getPacketLed() const {
 
 void Box::setPacketLed(Led *packetLed) {
     Box::packetLed = packetLed;
+}
+
+Sensor *Box::getCollectButton() const {
+    return collectButton;
+}
+
+void Box::setCollectButton(Sensor *collectButton) {
+    Box::collectButton = collectButton;
+}
+
+Sensor *Box::getCallingCardSensor() const {
+    return callingCardSensor;
+}
+
+void Box::setCallingCardSensor(Sensor *callingCardSensor) {
+    Box::callingCardSensor = callingCardSensor;
+}
+
+Led *Box::getCallingCardLed() const {
+    return callingCardLed;
+}
+
+void Box::setCallingCardLed(Led *callingCardLed) {
+    Box::callingCardLed = callingCardLed;
 }
 

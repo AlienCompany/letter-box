@@ -10,6 +10,8 @@ const uint8_t PIN_DOOR_SENSOR = 4;
 const uint8_t PIN_LETTER_LED = 3;
 const uint8_t PIN_COLLECT = 7;
 const uint8_t PIN_PACKET_LED = 6;
+const uint8_t PIN_CALLING_CARD = 8;
+const uint8_t PIN_CALLING_CARD_LED = 5;
 
 void setup() {
     Serial.begin(9600);
@@ -20,13 +22,18 @@ void setup() {
     Sensor *collectSensor = new Sensor(PIN_COLLECT);
     Led *packetLed = new Led(PIN_PACKET_LED, 0);
 
-    box = new Box(slotSensor, doorSensor, letterLed, collectSensor, packetLed);
+    Sensor *callingCardSensor = new Sensor(PIN_CALLING_CARD);
+    Led *callingCardLed = new Led(PIN_CALLING_CARD_LED, 0);
+
+    box = new Box(slotSensor, doorSensor, letterLed, collectSensor, packetLed, callingCardSensor, callingCardLed);
 
     pinMode(PIN_SLOT_SENSOR, INPUT);
     pinMode(PIN_DOOR_SENSOR, INPUT);
     pinMode(PIN_LETTER_LED, OUTPUT);
     pinMode(PIN_COLLECT, INPUT_PULLUP);
     pinMode(PIN_PACKET_LED, OUTPUT);
+    pinMode(PIN_CALLING_CARD, INPUT_PULLUP);
+    pinMode(PIN_CALLING_CARD_LED, OUTPUT);
 
     letterLed->init();
     packetLed->init();
