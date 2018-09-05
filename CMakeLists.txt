@@ -6,11 +6,13 @@ set(COMMON_CPPS
         FixBug.c
         ArrayAutoSize.cpp
         Sensor.cpp
+        Box.cpp
         )
 set(COMMON_HS
         ArrayAutoSize.h
         Util.h
         Sensor.h
+        Box.h
         )
 
 set(PROJECT_BOARD pro)
