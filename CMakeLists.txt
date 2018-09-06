@@ -16,6 +16,9 @@ set(COMMON_HS
         Box.h
         Led.h
         )
+set(COMMON_LIB
+        Ethernet
+        )
 
 set(PORT COM4)
 
@@ -31,7 +34,7 @@ set(PORT COM4)
 #    set(${PROJECT_NAME_TEST}_HDRS ${COMMON_HS})
 #    set(${PROJECT_NAME_TEST}_BOARD ${PROJECT_BOARD})
 #    set(${PROJECT_NAME_TEST}_PORT ${PORT})
-#    set(${PROJECT_NAME_TEST}_ARDLIBS Servo)
+#    set(${PROJECT_NAME_TEST}_ARDLIBS ${COMMON_LIB})
 #
 #    generate_arduino_firmware(${PROJECT_NAME_TEST})
 #    # -------------------- MarvinTest : END --------------------
@@ -47,7 +50,7 @@ set(${CMAKE_PROJECT_NAME}_SRCS main.cpp ${COMMON_CPPS})
 set(${CMAKE_PROJECT_NAME}_HDRS ${COMMON_HS})
 set(${CMAKE_PROJECT_NAME}_BOARD ${PROJECT_BOARD})
 set(${CMAKE_PROJECT_NAME}_PORT ${PORT})
-set(${CMAKE_PROJECT_NAME}_ARDLIBS Servo)
+set(${CMAKE_PROJECT_NAME}_ARDLIBS ${COMMON_LIB} )
 
 generate_arduino_firmware(${CMAKE_PROJECT_NAME})
 # ==================== Marvin : END ====================
