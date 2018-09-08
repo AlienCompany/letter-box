@@ -2,12 +2,13 @@
 // Created by hugues on 08/09/2018.
 //
 
+#include <stddef.h>
 #include "ChainElement.h"
 
 template<typename T>
 ChainElement<T>::ChainElement(T value) : value(value) {
-    previous = nullptr;
-    next = nullptr
+    previous = NULL;
+    next = NULL;
 }
 
 template<typename T>

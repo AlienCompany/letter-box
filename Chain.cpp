@@ -2,12 +2,13 @@
 // Created by hugues on 08/09/2018.
 //
 
+#include <stddef.h>
 #include "Chain.h"
 
 template<typename T>
 Chain<T>::Chain() {
-    this->first = nullptr;
-    this->last = nullptr;
+    this->first = NULL;
+    this->last = NULL;
 }
 
 template<typename T>
@@ -26,8 +27,8 @@ ChainElement<T> *Chain<T>::getLast() const {
 
 template<typename T>
 ChainElement<T> *Chain<T>::pushFront(T value) {
-    ChainElement<T> *newEle = new ChainElement(value);
-    if(first == nullptr){
+    ChainElement<T> *newEle = new ChainElement<T>(value);
+    if(first == NULL){
         last = newEle;
     }else{
         newEle->setNext(first);
@@ -54,8 +55,8 @@ T Chain<T>::removeLast() {
 template<typename T>
 T Chain<T>::remove(ChainElement<T> *element) {
 
-    if(element->getNext() != nullptr) element->getNext()->setPrevious(element->getPrevious());
-    if(element->getPrevious() != nullptr) element->getPrevious()->setNext(element->getNext());
+    if(element->getNext() != NULL) element->getNext()->setPrevious(element->getPrevious());
+    if(element->getPrevious() != NULL) element->getPrevious()->setNext(element->getNext());
     if(element == last) last = element->getPrevious();
     if(element == first) first = element->getNext();
     T res = element->getValue();
@@ -66,7 +67,7 @@ T Chain<T>::remove(ChainElement<T> *element) {
 template<typename T>
 uint16_t Chain<T>::length() const {
     int length = 0;
-    ChainElement* element = this->first;
-    for(;element != nullptr; element = element->getNext())length++;
+    ChainElement<T>* element = this->first;
+    for(;element != NULL; element = element->getNext())length++;
     return length;
 }
