@@ -8,6 +8,8 @@ set(COMMON_CPPS
         Sensor.cpp
         Box.cpp
         Led.cpp
+        Chain.cpp
+        ChainElement.cpp
         )
 set(COMMON_HS
         ArrayAutoSize.h
@@ -15,6 +17,8 @@ set(COMMON_HS
         Sensor.h
         Box.h
         Led.h
+        Chain.h
+        ChainElement.cpp
         )
 set(COMMON_LIB
         Ethernet
