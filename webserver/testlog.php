@@ -9,6 +9,6 @@ require "letterLog.php";
 
 $ip = getClientIp();
 
-letterLog('clientIp:'.$ip." url: /testlog.php");
-letterLog('clientIp:'.$ip." url: /log.php");
+letterLog('clientIp: '.$ip." url: /testlog.php");
+
 ?>
