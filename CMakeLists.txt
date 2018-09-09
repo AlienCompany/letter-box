@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8.4)
 set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/cmake/ArduinoToolchain.cmake)
 
+
+
 set(COMMON_CPPS
         Util.cpp
         FixBug.c
@@ -10,6 +12,7 @@ set(COMMON_CPPS
         Led.cpp
         Chain.cpp
         ChainElement.cpp
+        CommunicationService.cpp
         )
 set(COMMON_HS
         ArrayAutoSize.h
@@ -19,12 +22,35 @@ set(COMMON_HS
         Led.h
         Chain.h
         ChainElement.cpp
+        CommunicationService.h
         )
 set(COMMON_LIB
-        Ethernet
         )
-
+set(PROJECT_BOARD uno)
 set(PORT COM4)
+
+set(INC_PATH     "./include")
+set(LIB_DIR_PATH "./lib")
+# Lib include
+set(LIB_SRC_FILES)
+set(LIB_INC_PATH)
+file(GLOB LIBRARIES "${LIB_DIR_PATH}/*")
+foreach(subdir ${LIBRARIES})
+    file(GLOB lib_files "${subdir}/*.cpp"
+            "${subdir}/*.cc"
+            "${subdir}/*.c"
+            "${subdir}/*.cxx"
+            "${subdir}/*.S"
+            "${subdir}/*.s"
+            "${subdir}/*.sx"
+            "${subdir}/*.asm")
+    if(IS_DIRECTORY ${subdir})
+        list(APPEND LIB_INC_PATH  "${subdir}")
+    endif()
+    list(APPEND LIB_SRC_FILES "${lib_files}")
+endforeach()
+
+include_directories(${INC_PATH} ${LIB_INC_PATH})
 
 ## ==================== ALL TEST : BEGIN ====================
 #FOREACH(TESTNAME "ComB1" "ComB2" "MatriceLed" "Moteur" "UltraSon" "Debug")
@@ -50,7 +76,7 @@ set(PROJECT_NAME LETTER_BOX)
 project(${PROJECT_NAME})
 
 #### Uncomment below additional settings as needed.
-set(${CMAKE_PROJECT_NAME}_SRCS main.cpp ${COMMON_CPPS})
+set(${CMAKE_PROJECT_NAME}_SRCS main.cpp ${COMMON_CPPS} ${LIB_SRC_FILES})
 set(${CMAKE_PROJECT_NAME}_HDRS ${COMMON_HS})
 set(${CMAKE_PROJECT_NAME}_BOARD ${PROJECT_BOARD})
 set(${CMAKE_PROJECT_NAME}_PORT ${PORT})
