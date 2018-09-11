@@ -47,6 +47,8 @@ void setup() {
     packetLed->init();
     communicationService->init();
     communicationService->setServer(SERVER);
+    delay(1);
+    communicationService->sendNotificationLetter(true, true, false);
 }
 
 void loop() {
