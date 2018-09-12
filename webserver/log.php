@@ -48,6 +48,6 @@ $ip = getClientIp();
 </body>
 </html>
 <?php
-letterLog('clientIp: ' . $ip . " url: /log.php");
+letterLog('[INFO] clientIp: ' . $ip . " url: /log.php");
 ?>
 
