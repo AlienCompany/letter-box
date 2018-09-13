@@ -8,7 +8,7 @@
 #include <stddef.h>
 #include <IPAddress.h>
 #include "Chain.h"
-#include <src/Ethernet.h>
+#include <Ethernet.h>
 
 class CommunicationService {
 private:

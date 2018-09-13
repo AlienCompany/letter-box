@@ -35,8 +35,9 @@ set(LIB_DIR_PATH "./lib")
 set(LIB_SRC_FILES)
 set(LIB_INC_PATH)
 file(GLOB LIBRARIES "${LIB_DIR_PATH}/*")
-foreach(subdir ${LIBRARIES})
-    file(GLOB lib_files "${subdir}/*.cpp"
+foreach(libdir ${LIBRARIES})
+    set(subdir ${libdir}/src)
+    file(GLOB_RECURSE lib_files "${subdir}/*.cpp"
             "${subdir}/*.cc"
             "${subdir}/*.c"
             "${subdir}/*.cxx"
@@ -77,6 +78,7 @@ project(${PROJECT_NAME})
 
 #### Uncomment below additional settings as needed.
 set(${CMAKE_PROJECT_NAME}_SRCS main.cpp ${COMMON_CPPS} ${LIB_SRC_FILES})
+message("SRC FILES : ${CMAKE_PROJECT_NAME}_SRCS main.cpp ${COMMON_CPPS};${LIB_SRC_FILES}")
 set(${CMAKE_PROJECT_NAME}_HDRS ${COMMON_HS})
 set(${CMAKE_PROJECT_NAME}_BOARD ${PROJECT_BOARD})
 set(${CMAKE_PROJECT_NAME}_PORT ${PORT})

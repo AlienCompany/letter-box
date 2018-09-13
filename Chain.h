@@ -6,9 +6,10 @@
 #define LETTER_BOX_CHAIN_H
 
 #include <Arduino.h>
+#include <Ethernet.h>
 #include "ChainElement.h"
 
-template <typename T>
+template <class T>
 class Chain {
 private:
     ChainElement<T>* first;
@@ -33,6 +34,5 @@ public:
     uint16_t length() const;
 
 };
-
 
 #endif //LETTER_BOX_CHAIN_H

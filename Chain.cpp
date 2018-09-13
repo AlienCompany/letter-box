@@ -5,6 +5,8 @@
 #include <stddef.h>
 #include "Chain.h"
 
+template class Chain<EthernetClient *>;
+
 template<typename T>
 Chain<T>::Chain() {
     this->first = NULL;

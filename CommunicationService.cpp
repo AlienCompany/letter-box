@@ -6,6 +6,8 @@
 #include "CommunicationService.h"
 #include <SPI.h>
 
+CommunicationService* CommunicationService::communicationService = NULL;
+
 CommunicationService::CommunicationService() {}
 
 CommunicationService::~CommunicationService() {
