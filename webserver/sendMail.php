@@ -9,7 +9,7 @@ require "letterLog.php";
 
 $ip = getClientIp();
 
-letterlog('[INFO] clientIp: ' . $ip . " url: /senMail.php");
+letterlog('[INFO] clientIp: ' . $ip . " url: /sendMail.php");
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     letterlog('[ERROR] NOT_POST_REQUEST: une requête POST est attendu');
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     letterlog('[ERROR] WRONG_PASSWORD: le mot de passe est invalide');
 
 }else{
-    letterlog('[INFO] ' . 'letter: ' . $_POST['letter'] . 'packet: ' . $_POST['packet'] . 'callingCard: ' . $_POST['callingCard']);
+    letterlog('[INFO] ' . 'letter: ' . $_POST['letter'] . ' packet: ' . $_POST['packet'] . ' callingCard: ' . $_POST['callingCard']);
 
 }
 ?>
