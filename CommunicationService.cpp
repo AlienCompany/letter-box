@@ -77,14 +77,14 @@ void CommunicationService::setServer(char *serverName, uint16_t port) {
     serverPort = port;
 }
 
-void CommunicationService::sendNotification(bool hasLetter, bool hasPacket, bool hasCallingCard) {
+bool CommunicationService::sendNotificationReceive(bool hasLetter, bool hasPacket, bool hasCallingCard) {
     EthernetClient* client = generateConnexion();
     if(client != NULL) {
-        client->println("POST /sendMail.php HTTP/1.1");
+        client->println("POST /sendNotif.php HTTP/1.1");
         client->println("Host: letterbox.notraly.fr");
         client->println("Content-Type: application/x-www-form-urlencoded");
+        client->println("Content-length: 70");
         client->println("Connection: close");
-        client->println("Content-Length: 56");
         client->println();
         client->print("letter=");
         client->print(hasLetter ? "1" : "0");  // si hasLetter == 1 alors "1" sinon "0"
@@ -92,11 +92,39 @@ void CommunicationService::sendNotification(bool hasLetter, bool hasPacket, bool
         client->print(hasPacket ? "1" : "0");
         client->print("&callingCard=");
         client->print(hasCallingCard ? "1" : "0");
+        client->print("&notif=receive");
         client->print("&password=iloveyouforever");
         client->println();
         client->println();
+
+        return true;
+
     }else{
-        Serial.println("sendNotification failed");
+        Serial.println("sendNotificationReceive failed");
+
+        return false;
+    }
+
+}
+
+bool CommunicationService::sendNotificationCollect() {
+    EthernetClient* client = generateConnexion();
+    if(client != NULL) {
+        client->println("POST /sendNotif.php HTTP/1.1");
+        client->println("Host: letterbox.notraly.fr");
+        client->println("Content-Type: application/x-www-form-urlencoded");
+        client->println("Content-length: 38");
+        client->println("Connection: close");
+        client->println();
+        client->print("password=iloveyouforever");
+        client->print("&notif=collect");
+        client->println();
+        client->println();
+
+        return true;
+    }else{
+        Serial.println("sendNotificationCollect failed");
+        return false;
     }
 
 }
@@ -104,6 +132,9 @@ void CommunicationService::sendNotification(bool hasLetter, bool hasPacket, bool
 EthernetClient *CommunicationService::generateConnexion() {
     EthernetClient *client = new EthernetClient();
     clients.pushBack(client);
+    Serial.print("Connection (");
+    Serial.print((uint16_t) client);
+    Serial.println(")");
     int res;
     switch (serverType) {
         case 0:
@@ -118,8 +149,8 @@ EthernetClient *CommunicationService::generateConnexion() {
             break;
         case 2:
             res = client->connect(serverName, serverPort);
-            Serial.print("Connection par nom de domaine");
-            Serial.print(serverIp);
+            Serial.print("Connection par nom de domaine : ");
+            Serial.print(serverName);
             Serial.print(":");
             Serial.println(serverPort);
             break;
@@ -127,6 +158,8 @@ EthernetClient *CommunicationService::generateConnexion() {
     if(res){
         Serial.print("connected to ");
         Serial.println(client->remoteIP());
+        Serial.print(clients.length());
+        Serial.println(" clients");
         return client;
     }else {
         Serial.println("connection failed");
@@ -135,4 +168,40 @@ EthernetClient *CommunicationService::generateConnexion() {
         return NULL;
     }
 
+}
+
+void CommunicationService::loop() {
+
+    for(ChainElement<EthernetClient*>* clientElement = clients.getFirst(); clientElement != NULL;){
+        EthernetClient* client = clientElement->getValue();
+        int len= client->available();
+        if(len){
+            Serial.print("Connection (");
+            Serial.print((uint16_t) client);
+            Serial.println(") RESAVE:");
+            Serial.println("---------- DATA : begin ---------");
+            do{
+                byte buffer[80];
+                if (len > 80) len = 80;
+                client->read(buffer, len);
+                Serial.write(buffer, len);
+                len = client->available();
+            }while(len);
+            Serial.println("");
+            Serial.println("---------- DATA : end ---------");
+        }
+        if (!client->connected()) {
+            Serial.print("Connection (");
+            Serial.print((uint16_t) client);
+            Serial.println(") CLOSED!");
+            client->stop();
+            ChainElement<EthernetClient*>* next = clientElement->getNext();
+            clients.remove(clientElement);
+            Serial.print(clients.length());
+            Serial.println(" clients");
+            clientElement = next;
+        }else{
+            clientElement = clientElement->getNext();
+        }
+    }
 }

@@ -14,8 +14,9 @@ const uint8_t PIN_PACKET_LED = 6;
 const uint8_t PIN_CALLING_CARD = 8;
 const uint8_t PIN_CALLING_CARD_LED = 5;
 
-//char* SERVER = "letterbox.notraly.fr";
-IPAddress SERVER(192,168,1,20);
+char* SERVER = "letterbox.notraly.fr";
+//IPAddress SERVER(192,168,1,20);
+CommunicationService *communicationService ;
 
 
 
@@ -31,7 +32,7 @@ void setup() {
     Sensor *callingCardSensor = new Sensor(PIN_CALLING_CARD);
     Led *callingCardLed = new Led(PIN_CALLING_CARD_LED, 0);
 
-    CommunicationService *communicationService = CommunicationService::getInstance();
+    communicationService = CommunicationService::getInstance();
 
     box = new Box(slotSensor, doorSensor, letterLed, collectSensor, packetLed, callingCardSensor, callingCardLed);
 
@@ -53,5 +54,6 @@ void setup() {
 void loop() {
 
     box->loop();
+    communicationService->loop();
 
 }

@@ -49,9 +49,12 @@ public:
 
     void init();
 
-    void sendNotification(bool hasLetter, bool hasPacket, bool hasCallingCard);
+    bool sendNotificationReceive(bool hasLetter, bool hasPacket, bool hasCallingCard);
+    bool sendNotificationCollect();
 
     EthernetClient* generateConnexion();
+
+    void loop();
 };
 
 

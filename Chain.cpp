@@ -41,7 +41,14 @@ ChainElement<T> *Chain<T>::pushFront(T value) {
 
 template<typename T>
 ChainElement<T> *Chain<T>::pushBack(T value) {
-
+    ChainElement<T> *newEle = new ChainElement<T>(value);
+    if(last == NULL){
+        first = newEle;
+    }else{
+        newEle->setPrevious(last);
+        last->setNext(newEle);
+    }
+    last = newEle;
 }
 
 template<typename T>
