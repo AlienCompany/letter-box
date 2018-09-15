@@ -28,13 +28,28 @@ void Box::loop() {
     if (doorCode == OPEN) {
         onReceivePacket();
     }
-    if(callingCardEventCode == OPEN) {
+    if (callingCardEventCode == OPEN) {
         onReceiveCallingCard();
     }
     if (collectCode == OPEN) {
         onCollect();
     }
+    if (millis() >= timeToSendNotif) {
+        if (toSendNotificationReceive) {
+            if (communicationService->sendNotificationReceive(hasLetter, hasPacket, hasCallingCard)){
+                toSendNotificationReceive = false;
+            } else{
+                timeToSendNotif += 15000;
+            }
 
+        } else if (toSendNotificationCollect) {
+            if (communicationService->sendNotificationCollect()) {
+                toSendNotificationCollect = false;
+            } else{
+                timeToSendNotif += 15000;
+            }
+        }
+    }
 }
 
 void Box::onReceiveLetter() {
@@ -42,16 +57,23 @@ void Box::onReceiveLetter() {
     Serial.println("onReceiveLetter");
     letterLed->setBrightness(255);
     hasLetter = true;
-    communicationService->sendNotificationReceive(hasLetter, hasPacket, hasCallingCard);
+
+    timeToSendNotif = millis() + 30000;
+    toSendNotificationReceive = true;
+
 
 }
 
-void Box::onReceivePacket(){
+void Box::onReceivePacket() {
 
     Serial.println("onReceivePacket");
     packetLed->setBrightness(255);
     hasPacket = true;
-    communicationService->sendNotificationReceive(hasLetter, hasPacket, hasCallingCard);
+
+    timeToSendNotif = millis() + 30000;
+    toSendNotificationReceive = true;
+
+
 }
 
 void Box::onReceiveCallingCard() {
@@ -59,7 +81,11 @@ void Box::onReceiveCallingCard() {
     Serial.println("onReceiveCallingCard");
     callingCardLed->setBrightness(255);
     hasCallingCard = true;
-    communicationService->sendNotificationReceive(hasLetter, hasPacket, hasCallingCard);
+
+    timeToSendNotif = millis() + 30000;
+    toSendNotificationReceive = true;
+
+
 }
 
 void Box::onCollect() {
@@ -72,7 +98,10 @@ void Box::onCollect() {
     callingCardLed->setBrightness(0);
     hasCallingCard = false;
 
-    communicationService->sendNotificationCollect();
+    timeToSendNotif = millis() + 30000;
+    toSendNotificationCollect = true;
+
+
 }
 
 Sensor *Box::getSlotSensor() const {

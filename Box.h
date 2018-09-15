@@ -25,6 +25,9 @@ private:
     bool hasPacket = false;
     bool hasCallingCard = false;
 
+    bool toSendNotificationReceive = false;
+    bool toSendNotificationCollect = false;
+    long timeToSendNotif;
 
    CommunicationService* communicationService;
 
