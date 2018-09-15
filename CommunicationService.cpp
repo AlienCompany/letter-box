@@ -100,16 +100,35 @@ void CommunicationService::sendNotificationLetter(bool hasLetter, bool hasPacket
 EthernetClient *CommunicationService::generateConnexion() {
     EthernetClient *client = new EthernetClient();
     clients.pushBack(client);
-
+    int res;
     switch (serverType) {
         case 0:
             Serial.println("NO SERVER DEFINED");
             break;
         case 1:
-            client->connect(serverIp, serverPort);
+            res = client->connect(serverIp, serverPort);
+            Serial.print("Connection par Ip : ");
+            Serial.print(serverIp);
+            Serial.print(":");
+            Serial.println(serverPort);
             break;
         case 2:
-            client->connect(serverName, serverPort);
+            res = client->connect(serverName, serverPort);
+            Serial.print("Connection par nom de domaine");
+            Serial.print(serverIp);
+            Serial.print(":");
+            Serial.println(serverPort);
             break;
     }
+    if(res){
+        Serial.print("connected to ");
+        Serial.println(client->remoteIP());
+        return client;
+    }else {
+        Serial.println("connection failed");
+        clients.removeLast();
+        delete client;
+        return NULL;
+    }
+
 }
