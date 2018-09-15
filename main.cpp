@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "Util.h"
 #include "Box.h"
+#include "CommunicationService.h"
 
 
 Box *box;
@@ -12,6 +13,11 @@ const uint8_t PIN_COLLECT = 7;
 const uint8_t PIN_PACKET_LED = 6;
 const uint8_t PIN_CALLING_CARD = 8;
 const uint8_t PIN_CALLING_CARD_LED = 5;
+
+//char* SERVER = "letterbox.notraly.fr";
+IPAddress SERVER(192,168,1,20);
+
+
 
 void setup() {
     Serial.begin(9600);
@@ -25,6 +31,8 @@ void setup() {
     Sensor *callingCardSensor = new Sensor(PIN_CALLING_CARD);
     Led *callingCardLed = new Led(PIN_CALLING_CARD_LED, 0);
 
+    CommunicationService *communicationService = CommunicationService::getInstance();
+
     box = new Box(slotSensor, doorSensor, letterLed, collectSensor, packetLed, callingCardSensor, callingCardLed);
 
     pinMode(PIN_SLOT_SENSOR, INPUT);
@@ -37,7 +45,9 @@ void setup() {
 
     letterLed->init();
     packetLed->init();
-
+    communicationService->init();
+    communicationService->setServer(SERVER);
+    delay(1);
 }
 
 void loop() {
