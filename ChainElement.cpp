@@ -3,7 +3,11 @@
 //
 
 #include <stddef.h>
+#include <EthernetClient.h>
 #include "ChainElement.h"
+
+
+template class ChainElement<EthernetClient *>;
 
 template<typename T>
 ChainElement<T>::ChainElement(T value) : value(value) {
