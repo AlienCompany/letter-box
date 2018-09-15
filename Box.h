@@ -8,6 +8,7 @@
 
 #include "Sensor.h"
 #include "Led.h"
+#include "CommunicationService.h"
 
 class Box {
 
@@ -19,6 +20,13 @@ private:
     Led *packetLed;
     Sensor *callingCardSensor;
     Led *callingCardLed;
+
+    bool hasLetter = false;
+    bool hasPacket = false;
+    bool hasCallingCard = false;
+
+   CommunicationService* communicationService;
+
 
 public:
     Box(Sensor *slotSensor, Sensor *doorSensor, Led *letterLed, Sensor *collectButton, Led *packetLed,

@@ -3,12 +3,15 @@
 //
 
 #include "Box.h"
+#include "CommunicationService.h"
 #include <Arduino.h>
 
 Box::Box(Sensor *slotSensor, Sensor *doorSensor, Led *letterLed, Sensor *collectButton, Led *packetLed,
          Sensor *callingCardSensor, Led *callingCardLed)
         : slotSensor(slotSensor), doorSensor(doorSensor), letterLed(letterLed), collectButton(collectButton),
-          packetLed(packetLed), callingCardSensor(callingCardSensor), callingCardLed(callingCardLed) {}
+          packetLed(packetLed), callingCardSensor(callingCardSensor), callingCardLed(callingCardLed) {
+    communicationService = CommunicationService::getInstance();
+}
 
 Box::~Box() {}
 
@@ -28,6 +31,9 @@ void Box::loop() {
     if(callingCardEventCode == OPEN) {
         onReceiveCallingCard();
     }
+    if (collectCode == OPEN) {
+        onCollect();
+    }
 
 }
 
@@ -35,7 +41,8 @@ void Box::onReceiveLetter() {
 
     Serial.println("onReceiveLetter");
     letterLed->setBrightness(255);
-
+    hasLetter = true;
+    communicationService->sendNotification(hasLetter, hasPacket, hasCallingCard);
 
 }
 
@@ -43,22 +50,28 @@ void Box::onReceivePacket(){
 
     Serial.println("onReceivePacket");
     packetLed->setBrightness(255);
+    hasPacket = true;
+    communicationService->sendNotification(hasLetter, hasPacket, hasCallingCard);
+}
 
+void Box::onReceiveCallingCard() {
+
+    Serial.println("onReceiveCallingCard");
+    callingCardLed->setBrightness(255);
+    hasCallingCard = true;
+    communicationService->sendNotification(hasLetter, hasPacket, hasCallingCard);
 }
 
 void Box::onCollect() {
 
     Serial.println("onCollect");
     letterLed->setBrightness(0);
+    hasLetter = false;
     packetLed->setBrightness(0);
+    hasPacket = false;
     callingCardLed->setBrightness(0);
-
-}
-
-void Box::onCallingCard() {
-
-    Serial.println("onCallingCard");
-    callingCardLed->setBrightness(255);
+    hasCallingCard = false;
+    communicationService->sendNotification(hasLetter, hasPacket, hasCallingCard);
 }
 
 Sensor *Box::getSlotSensor() const {

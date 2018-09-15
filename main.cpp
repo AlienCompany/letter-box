@@ -48,7 +48,6 @@ void setup() {
     communicationService->init();
     communicationService->setServer(SERVER);
     delay(1);
-    communicationService->sendNotification(true, true, false);
 }
 
 void loop() {
