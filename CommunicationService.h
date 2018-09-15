@@ -16,7 +16,7 @@ private:
 
     virtual ~CommunicationService();
 
-    static CommunicationService *communicationService;
+    static CommunicationService* communicationService;
 
     IPAddress ip = IPAddress(192, 168, 0, 177);
 

@@ -63,7 +63,7 @@ public:
 
     virtual ~Box();
 
-    void onCallingCard();
+    void onReceiveCallingCard();
 };
 
 

@@ -25,11 +25,8 @@ void Box::loop() {
     if (doorCode == OPEN) {
         onReceivePacket();
     }
-    if (collectCode == OPEN) {
-        onCollect();
-    }
     if(callingCardEventCode == OPEN) {
-        onCallingCard();
+        onReceiveCallingCard();
     }
 
 }
