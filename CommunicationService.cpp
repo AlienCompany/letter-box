@@ -77,7 +77,7 @@ void CommunicationService::setServer(char *serverName, uint16_t port) {
     serverPort = port;
 }
 
-void CommunicationService::sendNotificationLetter(bool hasLetter, bool hasPacket, bool hasCallingCard) {
+void CommunicationService::sendNotification(bool hasLetter, bool hasPacket, bool hasCallingCard) {
     EthernetClient* client = generateConnexion();
     client->println("POST /sendMail.php HTTP/1.1");
     client->println("Host: letterbox.notraly.fr");

@@ -49,7 +49,7 @@ public:
 
     void init();
 
-    void sendNotificationLetter(bool hasLetter, bool hasPacket, bool hasCallingCard);
+    void sendNotification(bool hasLetter, bool hasPacket, bool hasCallingCard);
 
     EthernetClient* generateConnexion();
 };
