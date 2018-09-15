@@ -42,7 +42,7 @@ void Box::onReceiveLetter() {
     Serial.println("onReceiveLetter");
     letterLed->setBrightness(255);
     hasLetter = true;
-    communicationService->sendNotification(hasLetter, hasPacket, hasCallingCard);
+    communicationService->sendNotificationReceive(hasLetter, hasPacket, hasCallingCard);
 
 }
 
@@ -51,7 +51,7 @@ void Box::onReceivePacket(){
     Serial.println("onReceivePacket");
     packetLed->setBrightness(255);
     hasPacket = true;
-    communicationService->sendNotification(hasLetter, hasPacket, hasCallingCard);
+    communicationService->sendNotificationReceive(hasLetter, hasPacket, hasCallingCard);
 }
 
 void Box::onReceiveCallingCard() {
@@ -59,7 +59,7 @@ void Box::onReceiveCallingCard() {
     Serial.println("onReceiveCallingCard");
     callingCardLed->setBrightness(255);
     hasCallingCard = true;
-    communicationService->sendNotification(hasLetter, hasPacket, hasCallingCard);
+    communicationService->sendNotificationReceive(hasLetter, hasPacket, hasCallingCard);
 }
 
 void Box::onCollect() {
@@ -71,7 +71,8 @@ void Box::onCollect() {
     hasPacket = false;
     callingCardLed->setBrightness(0);
     hasCallingCard = false;
-    communicationService->sendNotification(hasLetter, hasPacket, hasCallingCard);
+
+    communicationService->sendNotificationCollect();
 }
 
 Sensor *Box::getSlotSensor() const {

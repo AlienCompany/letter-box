@@ -25,6 +25,7 @@ private:
     bool hasPacket = false;
     bool hasCallingCard = false;
 
+
    CommunicationService* communicationService;
 
 
