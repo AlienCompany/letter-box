@@ -79,21 +79,25 @@ void CommunicationService::setServer(char *serverName, uint16_t port) {
 
 void CommunicationService::sendNotification(bool hasLetter, bool hasPacket, bool hasCallingCard) {
     EthernetClient* client = generateConnexion();
-    client->println("POST /sendMail.php HTTP/1.1");
-    client->println("Host: letterbox.notraly.fr");
-    client->println("Content-Type: application/x-www-form-urlencoded");
-    client->println("Connection: close");
-    client->println("Content-Length: 56");
-    client->println();
-    client->print("letter=");
-    client->print(hasLetter ? "1" : "0");  // si hasLetter == 1 alors "1" sinon "0"
-    client->print("&packet=");
-    client->print(hasPacket ? "1" : "0");
-    client->print("&callingCard=");
-    client->print(hasCallingCard ? "1" : "0");
-    client->print("&password=iloveyouforever");
-    client->println();
-    client->println();
+    if(client != NULL) {
+        client->println("POST /sendMail.php HTTP/1.1");
+        client->println("Host: letterbox.notraly.fr");
+        client->println("Content-Type: application/x-www-form-urlencoded");
+        client->println("Connection: close");
+        client->println("Content-Length: 56");
+        client->println();
+        client->print("letter=");
+        client->print(hasLetter ? "1" : "0");  // si hasLetter == 1 alors "1" sinon "0"
+        client->print("&packet=");
+        client->print(hasPacket ? "1" : "0");
+        client->print("&callingCard=");
+        client->print(hasCallingCard ? "1" : "0");
+        client->print("&password=iloveyouforever");
+        client->println();
+        client->println();
+    }else{
+        Serial.println("sendNotification failed");
+    }
 
 }
 
